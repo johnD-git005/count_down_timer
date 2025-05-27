@@ -6,31 +6,118 @@
     <link rel="stylesheet" href="style.css">
     <title>Count Down Timer</title>
 </head>
-<body>
-    <div class="box">
-        <div id="disp">Timer</div>
+<body class="bg-slate-100 sm:mx-auto sm:my-auto md:mx-auto md:my-auto sm:grid-cols-1">
+    <div class="w-[400px] p-5 mx-auto my-5 border-2 rounded-xl" >
+        <div id="disp" class="text-center text-5xl tracking-widest font-serif font-bold text-slate-400">Timer</div>
         
-        <form action="#" id="">
-            <input type="number" name="hour" id="hour" placeholder="HOUR" autocomplete="off">
-            <input type="number" name="minute" id="minute" placeholder="MINUTE" autocomplete="off">
-            <input type="number" name="second" id="second" placeholder="SECOND" autocomplete="off">
-        </form>
+        <div class="rounded-full px-40 py-32 bg-slate-400 w-[200px] justify-self-center my-10 sm:flex-col">
+            <div  class="flex justify-self-center gap-5"> 
+                <div>
+                    <input type="number" name="" id="hour" placeholder="00"   class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none outline-none border-b-2 border-b-slate-200 w-[55px] text-5xl text-black">
+                    <span class="text-sm text-white ml-2">HOUR</span>
+                </div>
+                
+                <div>
+                    <input type="number" name="" id="minute" placeholder="00"   class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none outline-none border-b-2 border-b-slate-200 w-[55px] text-5xl text-black">
+                    <span class="text-sm text-white ml-[1px]">MINUTE</span>
+                </div>
 
-        <div class="btn">
-            <button id="start">START</button>
-            <button id="reset">RESET</button>
+                <div>
+                    <input type="number" name="" id="second" placeholder="00"   class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none outline-none border-b-2 border-b-slate-200 w-[55px] text-5xl text-black">
+                    <span class="text-sm text-white">SECOND</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn flex gap-10 justify-center">
+            <button id="reset" class="border py-3 px-5 rounded-full bg-slate-400 cursor-pointer hover:bg-slate-500 hover:text-slate-300 tracking-widest">RESET</button>
+            <button id="start" class="border py-3 px-5 rounded-full bg-slate-400 cursor-pointer hover:bg-slate-500 hover:text-slate-300 tracking-widest">START</button>
         </div>
     </div>
 
     <script>
+        let interval;
+        
+        document.getElementById('start').addEventListener('click', function () {
+            clearInterval(interval); // Clear any existing interval
+            let hours = parseInt(document.getElementById('hour').value) || 0;
+            let minutes = parseInt(document.getElementById('minute').value) || 0;
+            let seconds = parseInt(document.getElementById('second').value) || 0;
+        
+            let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+        
+            if (totalSeconds <= 0) {
+                alert("Please enter a valid time.");
+                return;
+            }
+        
+            interval = setInterval(() => {
+                if (totalSeconds <= 0) {
+                    clearInterval(interval);
+                    return;
+                }
+        
+                totalSeconds--;
+        
+                let h = Math.floor(totalSeconds / 3600);
+                let m = Math.floor((totalSeconds % 3600) / 60);
+                let s = totalSeconds % 60;
+        
+                document.getElementById('hour').value = h.toString().padStart(2, '0');
+                document.getElementById('minute').value = m.toString().padStart(2, '0');
+                document.getElementById('second').value = s.toString().padStart(2, '0');
+        
+            
+            }, 1000);
+        });
+        
+        document.getElementById('reset').addEventListener('click', function () {
+            clearInterval(interval);
+            document.getElementById('hour').value = '';
+            document.getElementById('minute').value = '';
+            document.getElementById('second').value = '';
+            document.getElementById('disp').textContent = 'Timer';
+        });
+        </script>
 
-        const hour = document.getElementById('hour');
-        const minute = document.getElementById('minute');
-        const second = document.getElementById('second');
+        <script>
+            
+            // let interval;
 
-        const start = document.getElementById('start');
-        const reset = document.getElementById('reset');
+            // let hour = document.getElementById('hour').value || 0;
+            // let minute = document.getElementById('minute').value || 0;
+            // let second = document.getElementById('second').value || 0;
 
-    </script>
+            // let start = document.getElementById('start');
+            // let reset = document.getElementById('reset');
+
+
+
+            // start.addEventListener('click', (e) => {
+            //     e.preventDefault();
+                
+            //     function clearInterval () {
+            //         clearInterval();
+            //     }
+
+            //     let totalSeconds = hour * 3600 + minute * 60 + second;
+
+            //     if (totalSeconds <= 0) {
+            //         alert('Fields cannot be empty')
+            //         return;
+            //     }
+
+            //               interval = setInterval(() => {
+            //     if (totalSeconds <= 0) {
+            //         clearInterval(interval);
+            //         return;
+            //     }
+
+            // });
+
+            
+         
+        </script>
+        
 </body>
 </html>
